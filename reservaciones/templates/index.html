@@ -1,0 +1,208 @@
+{% extends "layouts/cabezera.html" %} {% load static tailwind_tags %} {% load
+static %} {% block content %}
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      rel="shortcut icon"
+      href="../static/assets/logo.jpeg"
+      type="image/x-icon"
+    />
+    <title>Café Dulce´s</title>
+    {% tailwind_css %}
+  </head>
+  <body class="overflow-x-hidden bg-background">
+    <section
+      class="-z-10 absolute w-full h-1/2 sm:h-h-75 bg-botones sm:bg-transparent"
+    >
+      <img
+        src="../static/assets/cake-g4ae03a312_1280.jpg"
+        alt="logo banner"
+        class="relative -z-10 md:-mt-36 sm:-mt-36 lg:h-h-75 lg:w-full h-auto object-cover hidden sm:block"
+      />
+    </section>
+
+    <div class="z-50 text-white mt-11 sm:mt-36 flex flex-col">
+      <p
+        class="text-center font-bold text-4xl sm:text-6xl mt-20 sm:mt-10 lg:mt-32 px-1"
+      >
+        ¡Mereces Días Dulces!
+      </p>
+      <p class="text-3xl sm:text-3xl text-center mt-8 sm:mt-10 px-1">
+        Prueba Nuestra Variedad De Postres
+      </p>
+
+      <button
+        type="button"
+        class="bg-blue-500 w-52 h-12 m-auto mt-10 sm:w-48 sm:text-lg focus:outline-none text-white md:bg-botones font-bold rounded-full text-sm px-5 py-2 hover:bg-white hover:text-botones transition duration-500 mb-20"
+      >
+        Ver Productos
+      </button>
+    </div>
+    <div class="p-destacados w-full h-full mt-3">
+      <div class="text-producto mt-1 p-5 ml-3 lg:mt-36">
+        <p class="text-2xl font-semibold lg:text-4xl md:mt-10 mt-1">
+          Productos Destacados
+        </p>
+
+        <p class="text-2xl font-bold mt-5 lg:text-6xl">
+          Descubre La Excelencia De <br />
+          Nuestros Productos
+        </p>
+      </div>
+
+      <div class="swiper mySwiper mt-10">
+        <div class="swiper-wrapper">
+          {% for item in productos|slice:":6" %}
+          <div class="swiper-slide">
+            <div
+              class="block w-72 rounded-lg bg-white dark:bg-botones mx-auto lg:mx-7"
+            >
+              <div
+                class="relative overflow-hidden bg-cover bg-no-repeat flex pt-4"
+                data-te-ripple-init
+                data-te-ripple-color="light"
+              >
+                {% if item.imagen %}
+                <img
+                  src="{{ item.imagen.url }}"
+                  alt="{{ item.NombreProducto }}"
+                  class="m-auto rounded-lg w-60 h-60"
+                />
+                {% endif %}
+
+                <a href="#!">
+                  <div
+                    class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed"
+                  ></div>
+                </a>
+              </div>
+              <div class="p-6">
+                <h5
+                  class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50"
+                >
+                  {{item.NombreProducto}}
+                </h5>
+                <button
+                  type="button"
+                  class="inline-block rounded-lg bg-blue-400 px-6 pb-2 pt-2.5 mt-6 text-xs font-medium uppercase leading-normal text-white hover:bg-white hover:text-black hover:font-semibold transition duration-500"
+                  data-te-ripple-init
+                  data-te-ripple-color="light"
+                >
+                  Ver Más
+                </button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="promociones mt-36 lg:absolute w-full lg:h-full">
+      <div class="texto-promo absolute w-full h-80">
+        <p
+          class="text-white z-40 text-center font-bold text-3xl lg:text-6xl px-1 py-5 mt-2"
+        >
+          Promociones Especiales
+        </p>
+        <p
+          class="text-white lg:text-black text-center lg:font-bold font-semibold lg:text-5xl text-3xl px-1 my-3"
+        >
+          No Lleges A Casa Sin Algo Especial
+        </p>
+      </div>
+      <img
+        src="../static/assets/promotion-2.jpg"
+        alt="fondo promociones"
+        class="w-full h-h-75 object-cover object-left lg:h-full relative -z-10"
+      />
+    </div>
+    <div class="swiper mySwipers -mt-400 lg:mt-80">
+      <div class="swiper-wrapper">
+        {% for item in productoPostre %}
+        <div class="swiper-slide">
+          <div
+            class="bg-white block lg:flex lg:w-w-60 rounded-lg lg:ml-56 w-80 lg:h-h-40 h-h-50 ml-9"
+          >
+            <div class="lg:w-1/2 w-full h-28 lg:h-auto">
+              {% if item.imagen %}
+              <img
+                src="{{ item.imagen.url }}"
+                alt="{{ item.NombreProducto }}"
+                class="m-auto rounded-lg lg:mt-4"
+              />
+              {% endif %}
+            </div>
+            <div class="lg:p-10 lg:w-1/2 lg:-mt-48">
+              <h5
+                class="lg:mb-10 text-xl font-bold leading-tight text-black mt-52 lg:mt-60 text-center py-2"
+              >
+                {{ item.NombreProducto }}
+              </h5>
+              <p
+                class="lg:mb-2 px-4 text-xl font-medium leading-tight text-black"
+              >
+                {{ item.Descripcion }}
+              </p>
+              <button
+                type="button"
+                class="inline-block rounded-lg bg-blue-400 px-6 pb-2 pt-2.5 lg:mt-16 mt-7 text-xs font-medium uppercase leading-normal text-white hover:bg-white hover:text-black hover:font-semibold transition duration-500 ml-24 w-32"
+              >
+                Ver Más
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- <div class="swiper mySwipers -mt-400 lg:mt-80">
+      <div class="swiper-wrapper">
+        {% for items in productoPostre %}
+        <div class="swiper-slide">
+          <div
+            class="bg-white block lg:flex lg:w-w-60 rounded-lg lg:ml-56 w-80 lg:h-h-40 h-h-50 ml-9"
+          >
+            <div class="lg:w-1/2 w-full h-28 lg:h-auto">
+              {% if items.imagen %}
+              <img src="{{ items.imagen.url }}" alt="{{ items.NombreProducto }}" class="m-auto rounded-lg lg:mt-4">
+              {% endif %}
+            </div>
+            <div class="lg:p-10 lg:w-1/2 lg:-mt-48">
+              <h5
+                class="lg:mb-10 text-xl font-bold leading-tight text-black mt-52 lg:mt-60 text-center py-2"
+              >
+                Tiramisu
+              </h5>
+              <p
+                class="lg:mb-2 px-4 text-xl font-medium leading-tight text-black"
+              >
+                Postre clasico que no puede faltar xd
+              </p>
+              <button
+                type="button"
+                class="inline-block rounded-lg bg-blue-400 px-6 pb-2 pt-2.5 lg:mt-16 mt-7 text-xs font-medium uppercase leading-normal text-white hover:bg-white hover:text-black hover:font-semibold transition duration-500 ml-24 w-32"
+                data-te-ripple-init
+                data-te-ripple-color="light"
+              >
+                Ver Más
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div> -->
+
+    {% include 'layouts/pie.html' %} {% endblock %}
+  </body>
+</html>

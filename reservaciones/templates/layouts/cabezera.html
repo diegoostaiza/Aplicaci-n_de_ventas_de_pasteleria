@@ -1,0 +1,116 @@
+{% load static tailwind_tags %}
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      rel="shortcut icon"
+      href="../static/assets/logo.jpeg"
+      type="image/x-icon"
+    />
+    <title>Café Dulce´s</title>
+    {% tailwind_css %}
+  </head>
+  <body class="overflow-x-hidden bg-background">
+    <div class="mx-auto z-50 bg-red-950" style="z-index: 100000; !important">
+      <nav
+        id="navbar"
+        class="bg-red-950 lg:bg-transparent flex justify-between lg:justify-start items-center fixed top-0 w-full"
+        style="z-index: 100000; !important"
+      >
+        <div class="logo p-2 w-1/7 sm:ml-8 flex items-center gap-3">
+          <img
+            src="{% static 'assets/logo.jpeg' %}"
+            class="rounded-full w-14 md:w-20"
+            alt="logo cafe dulce"
+          />
+          <p class="font-bold sm:text-lg lg:text-2xl text-white">
+            Café Dulce´s
+          </p>
+        </div>
+        <div class="links lg:block hidden w-1/6 md:w-4/6">
+          <ul class="menu flex items-center justify-center gap-5">
+            <li><a href="{% url 'inicio' %}" class="link">Inicio</a></li>
+            <li><a href="{% url 'productos' %}" class="link">Productos</a></li>
+            {% if request.user.is_authenticated %}
+            <li>
+              <a
+                href="{% url 'salir' %}"
+                class="border-4 border-white text-white font-bold p-2 rounded-full hover:bg-white hover:text-black transition duration-500"
+                >Cerar Sesión</a
+              >
+            </li>
+            {% else %}
+            <li>
+              <a
+                href="{% url 'login' %}"
+                class="border-4 border-white text-white font-bold p-2 rounded-full hover:bg-white hover:text-black transition duration-500"
+                >Iniciar Sesión</a
+              >
+            </li>
+            <li>
+              <a
+                href="{% url 'registro' %}"
+                class="rounded-full bg-blue-400 text-white font-bold px-4 py-3 hover:text-black hover:bg-white transition duration-500"
+                >Registrarse</a
+              >
+            </li>
+            {% endif %}
+          
+          </ul>
+        </div>
+
+        <div
+          class="iconos hidden lg:flex w-28 h-12 text-white text-3xl justify-between"
+        >
+          <a href="https://www.facebook.com/cafedulces" target="_blank"
+            ><i class="fab fa-facebook-f hover:text-red-950"></i
+          ></a>
+          <a href="https://www.tiktok.com/@cafe_dulcesmg" target="_blank"
+            ><i class="fab fa-tiktok hover:text-red-950"></i
+          ></a>
+        </div>
+
+        <div class="block lg:hidden w-auto lg:w-4/6 pr-2 sm:pr-3">
+          <a href="#" class="link" id="menu-mobile"
+            ><i class="fa fa-bars text-2xl" aria-hidden="true" width="100"></i>
+          </a>
+          <ul
+            class="mobile-links hidden w-full absolute z-50 left-0 text-center bg-red-950 mt-0 md:mt-2"
+          >
+            <li><a href="#" class="link">Inicio</a></li>
+            <li><a href="#" class="link">Productos</a></li>
+            <li>
+              <a
+                href="#"
+                class="my-4 inline-block border-4 border-white text-white font-bold p-2 rounded-full hover:bg-white hover:text-black transition duration-500"
+                >Iniciar Sesión</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="my-4 inline-block rounded-full bg-blue-400 text-white font-bold px-4 py-3 hover:text-black hover:bg-white transition duration-500"
+                >Registrarse</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+  
+    {% block content %}
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="
+    {% static 'js/script.js' %}"></script>
+  </body>
+</html>

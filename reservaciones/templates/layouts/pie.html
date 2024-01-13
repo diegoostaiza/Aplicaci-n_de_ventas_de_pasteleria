@@ -1,0 +1,97 @@
+{% load static tailwind_tags %}
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link
+      rel="shortcut icon"
+      href="../static/assets/logo.jpeg"
+      type="image/x-icon"
+    />
+    <title>Café Dulce´s</title>
+    {% tailwind_css %}
+  </head>
+  <body>
+    {% block content %}
+    {% endblock %}
+    
+   <footer class="bg-white lg:-mt-44 z-50">
+    <img
+      src="../static/assets/fondo2.png"
+      alt="footer"
+      class="w-full object-cover absolute h-h-50 lg:h-96"
+    />
+    <div class="mx-auto w-full max-w-screen-xl relative pt-20">
+      <div
+        class="grid grid-cols-2 lg:gap-8 gap:5 px-4 py-6 lg:py-8 md:grid-cols-3"
+      >
+        <div>
+          <h2 class="mb-6 text-sm lg:text-2xl font-bold uppercase text-black">
+            Visita
+          </h2>
+          <ul class="text-black font-medium">
+            <li class="mb-4">
+              <a href="#" class="hover:underline">Inicio</a>
+            </li>
+            <li class="mb-4">
+              <a href="#" class="hover:underline">Productos</a>
+            </li>
+            <li class="mb-4">
+              <a href="#" class="hover:underline">Reservaciones</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="mb-6 text-sm lg:text-2xl font-bold uppercase text-black">
+            Información
+          </h2>
+          <ul class="text-black font-medium">
+            <li class="mb-4">
+              <a href="#" class="hover:underline">+593 997840372</a>
+            </li>
+            <li class="mb-4">
+              <a href="#" class="hover:underline"
+                >Av.25 Abril- Juan Celico Secaira</a
+              >
+            </li>
+            <li class="mb-4">
+              <a href="#" class="hover:underline">cafedulce@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="mb-6 text-sm lg:text-2xl font-bold uppercase text-black">
+            Redes sociales
+          </h2>
+          <ul class="text-black font-medium flex flex-col">
+            <li class="mb-4">
+              <a href="#" class="hover:underline"
+                ><i class="fab fa-facebook-f hover:text-red-950"></i>Facebook</a
+              >
+            </li>
+            <li class="mb-4">
+              <a href="#" class="hover:underline"
+                ><i class="fab fa-tiktok hover:text-red-950"></i>Tik Tok</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="px-4 py-6 md:flex md:items-center md:justify-center">
+        <span class="text-sm text-black sm:text-center"
+          >© 2024. Derechos Reservados
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="static\js\script.js"></script>
+  </body>
+</html>
