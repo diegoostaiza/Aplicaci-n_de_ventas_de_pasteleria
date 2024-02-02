@@ -5,13 +5,13 @@
 {% block content %}
 
 {% tailwind_css %}
-<body class="overflow-x-hidden bg-background flex flex-col">
+<body class="overflow-x-hidden bg-background h-full ">
 
     <section
     class="-z-10 absolute w-full h-60 sm:h-h-40 bg-botones sm:bg-transparent "
   >
     <img
-      src="../../static/assets/panesfondo.jpg"
+      src="{% static 'assets/panesfondo.jpg' %}"
       alt="logo banner"
       class="relative -z-10 md:-mt-36 sm:-mt-36 lg:h-h-40 lg:w-full h-60 sm:h-96 object-fill "
     />
@@ -20,18 +20,17 @@
 
   <h1 class="absolute w-full text-white text-4xl text-center mt-32 font-bold">Productos</h1>
 
-<main class="w-full h-full absolute">
+    <main class="w-full h-auto absolute pb-96" style="border: thin solid  transparent;">
     <section class="relative w-96 mt-96">
         <div class="pl-20">
             <h3 class="font-bold text-3xl">Categorías</h3>
         
             <ul class="mt-8 ml-2">
                 {% for categoria in categorias %}
-                    <a href="{% url 'productos' %}" class="font-semibold text-2xl">{{ categoria.NombreCategoria }}</a>
+                    <a href="" class="font-semibold text-2xl">{{ categoria.NombreCategoria }}</a>
                     <ul class="mt-3 ml-4">
-                        {% for subcategoria in subcategorias %}
+                        {% for subcategoria in listasubcategorias %}
                             {% if subcategoria.CategoriaID == categoria %}
-                          
                             <li class="font-semibold mb-5"><a href="{% url 'productosCategoria' subcategoria_id=subcategoria.SubcategoriaID %}">-{{ subcategoria.Descripcion }}</a></li>
                             {% endif %}
                         {% endfor %}
@@ -43,7 +42,7 @@
     </section>
 
     <section id="Projects"
-    class="relative w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center lg:mr-16 lg:-mt-72 justify-center gap-y-10 gap-x-14 mb-5">
+    class="relative w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center lg:mr-16 lg:-mt-72 justify-center gap-y-10 gap-x-14 mb-5 ">
 
     <!--   ✅ carta de productos -->
     {% for item in productos|slice:":6" %}
@@ -80,10 +79,15 @@
 
 
 </section>
-</main>
+    </main>
+   
+    
 
-
-  
 {% endblock %}
 
+
+
 </body>
+
+
+

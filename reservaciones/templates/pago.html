@@ -1,0 +1,57 @@
+{% extends "layouts/cabezera.html" %} {% load static tailwind_tags %} {% load
+  static %} {% block content %} {% tailwind_css %}
+  
+  <body class="overflow-x-hidden bg-background flex flex-col">
+    <section
+      class="-z-10 absolute w-full h-60 sm:h-h-40 bg-botones sm:bg-transparent"
+    >
+      <img
+        src="{% static 'assets/panesfondo.jpg' %}"
+        alt="logo banner"
+        class="relative -z-10 md:-mt-36 sm:-mt-36 lg:h-h-40 lg:w-full h-60 sm:h-96 object-fill"
+      />
+      <div class="absolute inset-0 bg-red-950 opacity-70 lg:h-72 h-60"></div>
+    </section>
+  
+    <h1 class="absolute w-full text-white text-4xl text-center mt-32 font-bold">
+      Pago
+    </h1>
+
+
+  
+  <section class="absolute w-full h-auto mt-80 overflow-hidden bg-background py-11 font-poppins">
+      <div class="w-full max-w-lg mx-auto p-8">
+      <div class="bg-white rounded-lg shadow-lg p-6">
+          <h2 class="text-lg font-medium mb-6">Formulario de pago</h2>
+          <form>
+              <div class="grid grid-cols-2 gap-6">
+                  <div class="col-span-2 sm:col-span-1">
+                      <label for="card-number" class="block text-sm font-medium text-gray-700 mb-2">Número de tarjeta
+                      </label>
+                      <input type="text" name="card-number" id="card-number" placeholder="0000 0000 0000 0000" class="w-full py-3 px-4 border border-gray-400 rounded-lg focus:outline-none focus:border-blue-500">
+                  </div>
+                  <div class="col-span-2 sm:col-span-1">
+                      <label for="expiration-date" class="block text-sm font-medium text-gray-700 mb-2">Fecha de vencimiento
+                      </label>
+                      <input type="text" name="expiration-date" id="expiration-date" placeholder="MM / YY" class="w-full py-3 px-4 border border-gray-400 rounded-lg focus:outline-none focus:border-blue-500">
+                  </div>
+                  <div class="col-span-2 sm:col-span-1">
+                      <label for="cvv" class="block text-sm font-medium text-gray-700 mb-2">Código de seguridad
+                      </label>
+                      <input type="text" name="cvv" id="cvv" placeholder="000" class="w-full py-3 px-4 border border-gray-400 rounded-lg focus:outline-none focus:border-blue-500">
+                  </div>
+                 
+              </div>
+              <div class="mt-8">
+                  <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg focus:outline-none"><a href="{% url 'confirmacion_pago' %}" class="text-center">Pagar</a></button>
+              </div>
+          </form>
+      </div>
+      </div>
+  </section>
+      
+  </body>
+
+    
+
+{% endblock %}      

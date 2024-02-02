@@ -1,0 +1,220 @@
+{% extends "layouts/cabezera.html" %}
+{% load static tailwind_tags %} {% load static %} {% block content %} {% tailwind_css %}
+
+<body class="overflow-x-hidden bg-background">
+    <section
+    class="-z-10 absolute w-full h-60 sm:h-h-40 bg-botones sm:bg-transparent "
+  >
+    <img
+      src="{% static 'assets/panesfondo.jpg' %}"
+      alt="logo banner"
+      class="relative -z-10 md:-mt-36 sm:-mt-36 lg:h-h-40 lg:w-full h-60 sm:h-96 object-fill "
+    />
+    <div class="absolute inset-0 bg-red-950 opacity-70 lg:h-72 h-60"></div>
+  </section>
+
+  <h1 class="absolute w-full text-white text-4xl text-center mt-32 font-bold">Productos</h1>
+  
+   
+
+<div class="lg:flex block w-full pl-20 ">
+   
+    <div class=" flex flex-col justify-center items-center min-h-screen">
+        <div class="bg-gray-100 rounded-lg shadow-lg p-6 mt-20">
+            <h1 class="text-2xl font-bold mb-6">Carriro De Compras</h1>
+            {% for item in productos_en_carrito %}
+                <div class="flex justify-between  gap-4" >
+                    <div class="flex items-center">
+                        <img src="{{ item.producto.imagen.url }}" alt="{{ item.producto.NombreProducto }}" class="mr-4 w-11 h-11">
+                        <div>
+                          <h2 class="font-bold">{{ item.producto.ProductoID }}</h2>
+                          <h2 class="nombre-producto font-bold">{{ item.producto.NombreProducto }}</h2>
+                          <p class="text-gray-700">Cantidad: {{ item.producto.cantidad }}</p>
+                          <div class="flex items-center">
+                              <button class="border rounded-md py-2 px-4 mr-2 decrement enviar" data-id-producto="{{ item.producto.ProductoID }}">-</button>
+                              <span class="text-center w-8 quantity">1{{ item.producto.cantidad }}</span>
+                              <button class="border rounded-md py-2 px-4 ml-2 increment enviar" data-id-producto="{{ item.producto.ProductoID }}">+</button>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="font-bold precio">${{ item.producto.Precio }}</span>
+                    </div>
+                </div>
+                <hr class="my-4">
+          {% endfor %}
+          
+            <div class="flex justify-between items-center">
+              <span class="font-bold">Subtotal:</span>
+              <span class="font-bold" id="sub_total_carrito">$ {{ sub_total_carrito }}</span>
+          </div>
+          <div class="flex justify-between items-center mt-4">
+              <span class="font-bold">Iva 12%:</span>
+              <span id="iva_redondeado">$ {{ iva_redondeado }}</span>
+          </div>
+          <hr class="my-4">
+          <div class="flex justify-between items-center">
+              <span class="font-bold">Total:</span>
+              <span class="font-bold" id="total">$ {{ total }}</span>
+          </div>
+          
+        </div>
+
+       <div class="flex text-lg gap-1 mt-2">
+        <p>¿Falta un producto? </p>
+        <a href="{% url 'productos' %}" class="font-bold">Seguir comprando</a>
+       </div>
+    </div>
+    
+  
+    <div class=" mt-[350px] flex flex-col min-h-screen items-center justify-center ">
+      <div class="mx-auto max-w-6xl px-12">
+        <div class="flex flex-wrap justify-center gap-3">
+          <label class="cursor-pointer">
+            <input type="radio" id="form-1-radio" class="peer sr-only" name="pricing" checked />
+            <div class="w-72 max-w-xl rounded-md bg-white p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-sky-600 peer-checked:ring-blue-400 peer-checked:ring-offset-2">
+              <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                  <p class="text-sm font-semibold uppercase text-gray-500"><i class="fa fa-truck text-4xl" aria-hidden="true"></i></p>
+                  <div>
+                    <svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                  </div>
+                </div>
+                <div class="flex items-end justify-between">
+                  <p><span class="text-lg font-bold">Entrega o envío a dirección</p>
+                </div>
+              </div>
+            </div>
+          </label>
+        
+          <label class="cursor-pointer">
+            <input type="radio" id="form-2-radio" class="peer sr-only" name="pricing" />
+            <div class="w-72 max-w-xl rounded-md bg-white p-5 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-sky-600 peer-checked:ring-blue-400 peer-checked:ring-offset-2">
+              <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                  <p class=" font-semibold uppercase text-gray-500"><i class="fa fa-shopping-basket text-4xl" aria-hidden="true"></i>
+                  </p>
+                  <div>
+                    <svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                  </div>
+                </div>
+                <div class="flex items-end justify-between">
+                  <p><span class="text-lg font-bold ">Recogida en la tienda</p>
+                
+                </div>
+              </div>
+            </div>
+          </label>
+         
+        </div>
+      </div>
+
+
+      <div class="w-[600px]  mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden flex flex-col justify-center items-center">
+          
+        <form class="py-4 px-6 w-[500px] h-[500px]" action="{% url 'pago' %}" method="POST" id="form-1">
+            {% csrf_token %}
+            <input type="text" hidden value="1" name="form-1"/>
+          
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="phone">
+                    Número De Telefono
+                </label>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="phone" type="tel" placeholder="Ingrese su número de telefono" name="phone">
+            </div>
+                   
+            
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="provincia">
+                  Provincia
+              </label>
+              <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="provincia" name="provincia">
+                  <option value="">Seleccione una provincia</option>
+                  {% for provincia_id, provincia_info in ciudades_ecuador.items %}
+                      <option value="{{ provincia_id }}">{{ provincia_info.provincia }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+          
+          <!-- <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="ciudad">
+                  Ciudad
+              </label>
+              <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="ciudad" name="ciudad">
+                  <option value="">Seleccione una ciudad</option>
+                  {% for provincia_id, provincia_info in ciudades_ecuador.items %}
+                      {% for canton_info in provincia_info.cantones %}
+                          <option value="{{ canton_info.canton_id }}">{{ canton_info.canton }}</option>
+                      {% endfor %}
+                  {% endfor %}
+              </select>
+          </div> -->
+        
+        
+          
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="phone">
+                 Ciudad
+              </label>
+              <input
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="ciudad" type="text" placeholder="Ingrese la ciudad" name="ciudad">
+          </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="phone">
+                 Dirección
+              </label>
+              <input
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="direccion" type="text" placeholder="Dirección fisica, apartamento, piso" name="direccion">
+          </div>
+          
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="phone">
+                 Código Postal
+              </label>
+              <input
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="c_postal" type="tel" placeholder="Ingrese el código postal" name="c_postal">
+          </div>
+          
+          <button type="submit" class="absolute bg-blue-500 rounded-md lg:w-[150px] text-center py-2 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 mt-3">Continuar</button>
+    
+        </form>
+
+
+        <form class="mt-96 py-4 px-6 w-[500px] hidden" action="{% url 'pago' %}" method="POST" id="form-2">
+          {% csrf_token %}
+          <input type="text" hidden value="2" name="form-2"/>
+    
+              <div class="mb-4 -mt-80">
+                <label class="block text-gray-700 font-bold mb-2" for="phone">
+                    Número De Telefono
+                </label>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="phone" type="tel" placeholder="Ingrese sun número de telefono" name="phone">
+              </div>
+                  
+              <button type="submit"  class="  absolute bg-blue-500 rounded-md lg:w-[150px] text-center py-2 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 mt-3">Continuar</button>
+
+        </form>
+
+      
+    </div>
+
+    </div>
+
+
+
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="
+{% static 'js/dos.js' %}"></script>
+
+</body>
+  
+{% endblock %}

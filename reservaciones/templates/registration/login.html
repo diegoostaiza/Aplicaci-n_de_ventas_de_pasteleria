@@ -1,25 +1,98 @@
-{% extends "../layouts/cabezera.html" %} 
-
-{% load static tailwind_tags %} 
-{% load static %}
-{% block content %}
-
-{% tailwind_css %}
+{% extends "../layouts/cabezera.html" %} {% load static tailwind_tags %} {% load
+static %} {% block content %} {% tailwind_css %}
 <body class="overflow-x-hidden bg-background">
-
-    <section
+  <section
     class="-z-10 absolute w-full h-60 sm:h-h-40 bg-botones sm:bg-transparent"
   >
     <img
       src="../../static/assets/panesfondo.jpg"
       alt="logo banner"
-      class="relative -z-10 md:-mt-36 sm:-mt-36 lg:h-h-40 lg:w-full h-60 sm:h-96 object-fill "
+      class="relative -z-10 md:-mt-36 sm:-mt-36 lg:h-h-40 lg:w-full h-60 sm:h-96 object-fill"
     />
     <div class="absolute inset-0 bg-red-950 opacity-70 lg:h-72 h-60"></div>
   </section>
 
-  <h1 class="absolute w-full text-white text-4xl text-center mt-32 font-bold">Iniciar Sesión</h1>
+  <h1 class="absolute w-full text-white text-4xl text-center mt-32 font-bold">
+    Login De Usuario
+  </h1>
 
-  
-{% endblock %}
+  <div
+    class="absolute w-full m-auto  mt-72 min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8"
+  >
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Iniciar sesión en su cuenta
+      </h2>
+      <p class="mt-2 text-center text-sm text-gray-600 max-w">
+        O
+        <a href="{% url 'registro' %}" class="font-medium text-blue-600 hover:text-blue-500">
+          crea una cuenta
+        </a>
+      </p>
+    </div>
+
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <form class="space-y-6" action="#" method="POST">
+          {% if messages %} {% for message in messages %}
+          <div class="bg-blue-600 text-white">{{message}}</div>
+          {% endfor %} {% endif %} {% csrf_token %}
+
+          <div>
+            <label
+              for="username"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Usuario:
+            </label>
+            <div class="mt-1">
+              <input
+                id="username"
+                name="username"
+                type="text"
+                required
+                class="form-control appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Ingrese su usuario"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Contraseña
+            </label>
+            <div class="mt-1">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Ingrese su contraseña"
+              />
+            </div>
+          </div>
+
+      
+
+          <div>
+            <button
+              type="submit"
+              value="Registro"
+              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-full text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Ingresar
+            </button>
+          </div>
+        </form>   
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
 </body>

@@ -1,5 +1,7 @@
-{% extends "layouts/cabezera.html" %} {% load static tailwind_tags %} {% load
-static %} {% block content %}
+{% extends "layouts/cabezera.html" %} 
+{% load static tailwind_tags %}
+{% load static %} 
+{% block content %}
 <html>
   <head>
     <link
@@ -39,12 +41,12 @@ static %} {% block content %}
         Prueba Nuestra Variedad De Postres
       </p>
 
-      <button
-        type="button"
-        class="bg-blue-500 w-52 h-12 m-auto mt-10 sm:w-48 sm:text-lg focus:outline-none text-white md:bg-botones font-bold rounded-full text-sm px-5 py-2 hover:bg-white hover:text-botones transition duration-500 mb-20"
+      <a href="productos"
+        
+        class="bg-blue-500 w-52 h-12 m-auto mt-10 sm:w-48 sm:text-lg focus:outline-none text-white md:bg-botones font-bold rounded-full text-sm px-5 py-2 hover:bg-white hover:text-botones transition duration-500 mb-20 text-center"
       >
         Ver Productos
-      </button>
+      </a>
     </div>
     <div class="p-destacados w-full h-full mt-3">
       <div class="text-producto mt-1 p-5 ml-3 lg:mt-36">
@@ -61,46 +63,32 @@ static %} {% block content %}
       <div class="swiper mySwiper mt-10">
         <div class="swiper-wrapper">
           {% for item in productos|slice:":6" %}
-          <div class="swiper-slide">
-            <div
-              class="block w-72 rounded-lg bg-white dark:bg-botones mx-auto lg:mx-7"
-            >
-              <div
-                class="relative overflow-hidden bg-cover bg-no-repeat flex pt-4"
-                data-te-ripple-init
-                data-te-ripple-color="light"
-              >
-                {% if item.imagen %}
-                <img
-                  src="{{ item.imagen.url }}"
-                  alt="{{ item.NombreProducto }}"
-                  class="m-auto rounded-lg w-60 h-60"
-                />
-                {% endif %}
-
-                <a href="#!">
-                  <div
-                    class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed"
-                  ></div>
-                </a>
+          
+              <div class="swiper-slide">
+                <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl ml-4">
+                    <a href="{% url 'productoSelecionado' producto_id=item.ProductoID %}">
+                        {% if item.imagen %}
+                        <img src="{{ item.imagen.url }}"
+                                alt="{{ item.NombreProducto }}" class="h-80 w-72 object-cover rounded-t-xl" />
+                        {% endif %}
+                        <div class="px-4 py-3 w-72">
+                            {% for categoria in categorias %}
+                                {% if item.CategoriaID == categoria %}
+                            <span class="text-gray-400 mr-3 uppercase text-xs">{{ categoria.NombreCategoria }}</span>
+                                {% endif %}
+                            {% endfor %}
+                            <p class="text-lg font-bold text-black truncate block capitalize">{{ item.NombreProducto }}</p>
+                            <a href="{% url 'productoSelecionado' producto_id=item.ProductoID %}"
+                            
+                            class="inline-block rounded-lg bg-blue-400 px-6 pb-2 pt-2.5 mt-6 text-xs font-medium uppercase leading-normal text-white hover:bg-blue-500  hover:font-semibold transition duration-500 text-center"
+                          
+                          >
+                            Ver Más
+                          </a>
+                        </div>
+                    </a>
+                </div>
               </div>
-              <div class="p-6">
-                <h5
-                  class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50"
-                >
-                  {{item.NombreProducto}}
-                </h5>
-                <button
-                  type="button"
-                  class="inline-block rounded-lg bg-blue-400 px-6 pb-2 pt-2.5 mt-6 text-xs font-medium uppercase leading-normal text-white hover:bg-white hover:text-black hover:font-semibold transition duration-500"
-                  data-te-ripple-init
-                  data-te-ripple-color="light"
-                >
-                  Ver Más
-                </button>
-              </div>
-            </div>
-          </div>
           {% endfor %}
         </div>
       </div>
@@ -125,84 +113,58 @@ static %} {% block content %}
         class="w-full h-h-75 object-cover object-left lg:h-full relative -z-10"
       />
     </div>
-    <div class="swiper mySwipers -mt-400 lg:mt-80">
+
+
+
+    <div class="swiper mySwipers -mt-96 lg:mt-80">
       <div class="swiper-wrapper">
         {% for item in productoPostre %}
-        <div class="swiper-slide">
-          <div
-            class="bg-white block lg:flex lg:w-w-60 rounded-lg lg:ml-56 w-80 lg:h-h-40 h-h-50 ml-9"
-          >
-            <div class="lg:w-1/2 w-full h-28 lg:h-auto">
+      <div class="swiper-slide">
+        <!-- component -->
+        <div class="-mt-32 mx-auto flex  min-h-screen items-center justify-center">
+          <div class=" relative flex h-96 w-full max-w-[50rem]  rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+            <div class="relative m-0 w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-none bg-white bg-clip-border text-gray-700">
               {% if item.imagen %}
               <img
                 src="{{ item.imagen.url }}"
                 alt="{{ item.NombreProducto }}"
-                class="m-auto rounded-lg lg:mt-4"
+                class="h-full w-full object-cover"
               />
               {% endif %}
+            
             </div>
-            <div class="lg:p-10 lg:w-1/2 lg:-mt-48">
-              <h5
-                class="lg:mb-10 text-xl font-bold leading-tight text-black mt-52 lg:mt-60 text-center py-2"
-              >
+            <div class="p-6">
+            
+              <h4 class="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
                 {{ item.NombreProducto }}
-              </h5>
-              <p
-                class="lg:mb-2 px-4 text-xl font-medium leading-tight text-black"
-              >
+              </h4>
+              <p class="mb-8 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
                 {{ item.Descripcion }}
               </p>
-              <button
-                type="button"
-                class="inline-block rounded-lg bg-blue-400 px-6 pb-2 pt-2.5 lg:mt-16 mt-7 text-xs font-medium uppercase leading-normal text-white hover:bg-white hover:text-black hover:font-semibold transition duration-500 ml-24 w-32"
-              >
-                Ver Más
-              </button>
+              <a class="inline-block" href="#">
+                <a href="{% url 'productoSelecionado' producto_id=item.ProductoID %}"
+              
+                class="inline-block rounded-lg bg-blue-400 px-6 pb-2 pt-2.5 mt-6 text-xs font-medium uppercase leading-normal text-white hover:bg-blue-500  hover:font-semibold transition duration-500 text-center"
+             
+             
+            >
+              Ver Más
+            </a>
+              </a>
             </div>
           </div>
+          <!-- stylesheet -->
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css"
+          />
         </div>
+      </div>
         {% endfor %}
       </div>
     </div>
 
-    <!-- <div class="swiper mySwipers -mt-400 lg:mt-80">
-      <div class="swiper-wrapper">
-        {% for items in productoPostre %}
-        <div class="swiper-slide">
-          <div
-            class="bg-white block lg:flex lg:w-w-60 rounded-lg lg:ml-56 w-80 lg:h-h-40 h-h-50 ml-9"
-          >
-            <div class="lg:w-1/2 w-full h-28 lg:h-auto">
-              {% if items.imagen %}
-              <img src="{{ items.imagen.url }}" alt="{{ items.NombreProducto }}" class="m-auto rounded-lg lg:mt-4">
-              {% endif %}
-            </div>
-            <div class="lg:p-10 lg:w-1/2 lg:-mt-48">
-              <h5
-                class="lg:mb-10 text-xl font-bold leading-tight text-black mt-52 lg:mt-60 text-center py-2"
-              >
-                Tiramisu
-              </h5>
-              <p
-                class="lg:mb-2 px-4 text-xl font-medium leading-tight text-black"
-              >
-                Postre clasico que no puede faltar xd
-              </p>
-              <button
-                type="button"
-                class="inline-block rounded-lg bg-blue-400 px-6 pb-2 pt-2.5 lg:mt-16 mt-7 text-xs font-medium uppercase leading-normal text-white hover:bg-white hover:text-black hover:font-semibold transition duration-500 ml-24 w-32"
-                data-te-ripple-init
-                data-te-ripple-color="light"
-              >
-                Ver Más
-              </button>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div> -->
-
-    {% include 'layouts/pie.html' %} {% endblock %}
+    {% include 'layouts/pie.html' %}
+{% endblock %}
   </body>
 </html>

@@ -1,0 +1,312 @@
+{% extends "layouts/cabezera.html" %} {% load static tailwind_tags %} {% load
+static %} {% block content %} {% tailwind_css %}
+
+<body class="overflow-x-hidden bg-background flex flex-col">
+  <section
+    class="-z-10 absolute w-full h-60 sm:h-h-40 bg-botones sm:bg-transparent"
+  >
+    <img
+      src="{% static 'assets/panesfondo.jpg' %}"
+      alt="logo banner"
+      class="relative -z-10 md:-mt-36 sm:-mt-36 lg:h-h-40 lg:w-full h-60 sm:h-96 object-fill"
+    />
+    <div class="absolute inset-0 bg-red-950 opacity-70 lg:h-72 h-60"></div>
+  </section>
+
+  <h1 class="absolute w-full text-white text-4xl text-center mt-32 font-bold">
+    Productos
+  </h1>
+
+
+
+  <section class="absolute w-full h-auto mt-80 overflow-hidden bg-background py-11 font-poppins">
+    <div class="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
+      {% for item in productos %}
+        <div class="flex flex-wrap -mx-4">
+            <div class="w-full mb-8 md:w-1/2 md:mb-0">
+                <div class="sticky top-0 z-50 overflow-hidden ">
+                    <div class="relative mb-6 lg:mb-10 lg:h-2/4 ">
+                      {% if item.imagen %}
+                        <img src="{{ item.imagen.url }}" alt="{{ item.NombreProducto}}"
+                            class="object-contain object-center w-full lg:h-full ">
+                      {% endif %}
+                    </div>
+                    <div class="flex-wrap hidden md:flex ">
+                        <div class="w-1/2 p-2 sm:w-1/4">
+                            <a href="" class="block border border-blue-300 hover:border-blue-300">
+                              {% if item.imagen %}
+                                <img src="{{ item.imagen.url }}" alt=""
+                                    class="object-cover w-full lg:h-20">
+                              {% endif %}
+                            </a>
+                        </div>
+                        <div class="w-1/2 p-2 sm:w-1/4">
+                            <a href="#" class="block border border-transparent hover:border-blue-300">
+                              {% if item.imagen %}
+                                <img src="{{ item.imagen.url }}" alt=""
+                                    class="object-cover w-full lg:h-20">
+                              {% endif %}
+                            </a>
+                        </div>
+                        <div class="w-1/2 p-2 sm:w-1/4">
+                            <a href="#" class="block border border-transparent hover:border-blue-300">
+                              {% if item.imagen %}  
+                              <img src="{{ item.imagen.url }}" alt=""
+                                    class="object-cover w-full lg:h-20">
+                              {% endif %}
+                            </a>
+                        </div>
+                       
+                    </div>
+                    <div class="px-6 pb-6 mt-6 border-t border-gray-300 dark:border-gray-400 ">
+                        <div class="flex flex-wrap items-center mt-6">
+                            
+                            <h2 class="text-lg font-bold text-gray-700">Realiza tu pedido con 24 horas de anticipación y envía tu locación vía WhatsApp al 0997840372 para agilizar tu envío.</h2>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="w-full px-4 md:w-1/2 ">
+                <div class="lg:pl-20">
+                    <div class="mb-8 ">
+                        <h2 class="max-w-xl mb-6 text-2xl font-bold text-black md:text-4xl">
+                          {{ item.NombreProducto }}</h2>
+                        <p class="inline-block mb-6 text-4xl font-bold text-black ">
+                            <span>$ {{ item.Precio }}</span>
+                        </p>
+                        <p class="max-w-md text-black">
+                          {{ item.Descripcion }}
+                        </p>
+                        {% for inv_item in inventario %}
+                          {% if inv_item.CantidadDisponible > 5 %}
+                            <p class="max-w-md text-green-600">
+                              Estado: En Stock
+                            </p>
+                          {% elif inv_item.CantidadDisponible > 0 %}
+                            <p class="max-w-md text-yellow-600">
+                              Estado: Stock Limitado ({{ inv_item.CantidadDisponible }} unidades disponibles)
+                            </p>
+                          {% else %}
+                            <p class="max-w-md text-red-600">
+                              Estado: Sin Stock
+                            </p>
+                          {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% for producto in productos %}
+                    <form class="py-4  w-[300px]" action="{% url 'agregar_al_carrito' producto_id=producto.ProductoID %}" method="POST" id="">
+                      {% csrf_token %}
+                      <div class="mb-4">
+                        <label class="block text-gray-700 font-bold mb-2" for="fecha_entrega">
+                            Fecha para la entrega
+                        </label>
+                        <input
+                            name="fecha_entrega"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="fecha_entrega" type="date" placeholder="Select a date" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-bold mb-2" for="hora_entrega">
+                            Ingrese a hora que desea su entrega - 9am a 5pm
+                        </label>
+                        <input
+                            name="hora_entrega"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="hora_entrega" type="time" min="09:00" max="16:00" placeholder="" required>
+                    </div>
+                    
+                      <div class="flex flex-wrap items-center gap-4 ">
+                        {% for inv_item in inventario %}
+                          {% if inv_item.CantidadDisponible > 0 %}
+                              <button type="submit" class="w-full  bg-blue-500 rounded-md lg:w-[150px] text-center py-2 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-500">Agregar al carrito</button>
+                          {% else %}
+                          <a href="{% url 'productos' %}" class="inline-block rounded-lg bg-blue-400 px-6 pb-2 pt-2.5 mt-6 text-xs font-medium uppercase leading-normal text-white hover:bg-blue-500  hover:font-semibold transition duration-500 text-center"
+                          >Ver más productos</a>      
+                          {% endif %}
+                        {% endfor %}
+                     
+                        
+                     
+                        {% if messages %} {% for message in messages %}
+                        <div
+                        id="toast-danger"
+                        class="toast flex items-center w-full max-w-xs p-4 mb-4 mt-5 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400"
+                        role="alert"
+                      >
+                        <div
+                          class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200"
+                        >
+                          <svg
+                            class="w-5 h-5"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"
+                            />
+                          </svg>
+                          <span class="sr-only">Warning icon</span>
+                        </div>
+                        <div class="ml-3 text-sm font-normal text-black">
+                        {{ message }}
+                        </div>
+                        <button
+                          type="button"
+                          class="close-button ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                          data-dismiss-target="#toast-danger"
+                          aria-label="Close"
+                        >
+                          <span class="sr-only">Close</span>
+                          <svg
+                            class="w-3 h-3"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 14 14"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      {% endfor %} {% endif %}
+                    </div>
+                    </form>
+                    {% endfor %}
+                   
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+    </div>
+</section>
+
+  <!-- <section class="absolute w-full h-auto mt-80">
+    <div class="flex">
+      <div class="derecha flex-col w-[80%]">
+        {% for item in productos %}
+        <div class="bg-white py-8">
+          <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row -mx-5">
+              <div class="md:flex-1 px-4">
+                <div
+                  class="h-[460px] w-[450px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4"
+                >
+                  {% if item.imagen %}
+                  <img
+                    class="w-full h-full object-cover"
+                    src="{{ item.imagen.url }}"
+                    alt="{{ item.NombreProducto}}"
+                  />
+                  {% endif %}
+                </div>
+              </div>
+              <div class="md:flex-1 px-4 lg:mt-20">
+                <h2 class="text-2xl font-bold text-black mb-2">
+                  {{ item.NombreProducto }}
+                </h2>
+
+                <div class="flex mb-4 lg:mt-10 gap-5">
+                  <div class="mr-4">
+                    <span class="font-bold text-black">Precio:</span>
+                    <span class="text-black">{{ item.Precio }}</span>
+                  </div>
+                  {% for i in inventario %}
+                  <div>
+                    <span class="font-bold text-black">Estado:</span>
+
+                    {% if i.CantidadDisponible >= 1 %}
+                    <span class="text-black">En Stock</span>
+                    {% else %}
+                    <span class="text-black">No hay Stock</span>
+                    {% endif %}
+                  </div>
+                  {% endfor %}
+                </div>
+
+                <div>
+                  <span class="font-bold text-black"
+                    >Description Del Producto:</span
+                  >
+                  <p class="text-blacktext-sm mt-2">{{ item.Descripcion }}</p>
+                </div>
+                <a class="inline-block" href="#">
+                  {% for producto in productos %}
+                  <a
+                    href="{% url 'agregar_al_carrito' producto_id=producto.ProductoID %}"
+                    class="inline-block rounded-lg bg-blue-400 px-6 pb-2 pt-2.5 mt-6 text-xs font-medium uppercase leading-normal text-white hover:bg-white hover:text-black hover:font-semibold transition duration-500 text-center"
+                  >
+                    Agregar
+                  </a>
+                  {% endfor %} {% if messages %} {% for message in messages %}
+                  <div
+                    id="toast-danger"
+                    class="toast flex items-center w-full max-w-xs p-4 mb-4 mt-5 text-gray-500 bg-background rounded-lg shadow dark:text-gray-400"
+                    role="alert"
+                  >
+                    <div
+                      class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200"
+                    >
+                      <svg
+                        class="w-5 h-5"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"
+                        />
+                      </svg>
+                      <span class="sr-only">Warning icon</span>
+                    </div>
+                    <div class="ml-3 text-sm font-normal text-black">
+                      {{ message }}
+                    </div>
+                    <button
+                      type="button"
+                      class="close-button ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                      data-dismiss-target="#toast-danger"
+                      aria-label="Close"
+                    >
+                      <span class="sr-only">Close</span>
+                      <svg
+                        class="w-3 h-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 14"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  {% endfor %} {% endif %}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="izquierda w-1/2"></div>
+    </div>
+  </section> -->
+
+  {% endblock %}
+</body>

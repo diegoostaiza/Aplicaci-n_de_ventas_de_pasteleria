@@ -1,6 +1,10 @@
+
 {% load static tailwind_tags %}
+
+</footer>
 <html>
   <head>
+    <script src="https://js.stripe.com/v3/"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
@@ -46,6 +50,21 @@
                 >Cerar Sesión</a
               >
             </li>
+
+          
+        
+              <a href="{% url 'carrito' %}">
+                  <i class="fa fa-cart-plus border-white text-white font-bold p-2 rounded-full hover:bg-white hover:text-black transition duration-500" aria-hidden="true">
+                    {% if request.session.carrito %}
+                    <span class="">{{ request.session.carrito }}</span>
+                {% endif %}
+                  </i>
+                 
+              </a>
+          </li>
+
+       
+          
             {% else %}
             <li>
               <a
@@ -62,6 +81,7 @@
               >
             </li>
             {% endif %}
+            
           
           </ul>
         </div>
@@ -108,6 +128,7 @@
   
     {% block content %}
     {% endblock %}
+
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="

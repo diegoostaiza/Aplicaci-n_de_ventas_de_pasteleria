@@ -1,25 +1,37 @@
-{% extends "../layouts/cabezera.html" %} 
-
-{% load static tailwind_tags %} 
-{% load static %}
-{% block content %}
-
-{% tailwind_css %}
+{% extends "../layouts/cabezera.html" %} {% load static tailwind_tags %} {% load
+static %} {% block content %} {% tailwind_css %}
 <body class="overflow-x-hidden bg-background">
-
-    <section
+  <section
     class="-z-10 absolute w-full h-60 sm:h-h-40 bg-botones sm:bg-transparent"
   >
     <img
       src="../../static/assets/panesfondo.jpg"
       alt="logo banner"
-      class="relative -z-10 md:-mt-36 sm:-mt-36 lg:h-h-40 lg:w-full h-60 sm:h-96 object-fill "
+      class="relative -z-10 md:-mt-36 sm:-mt-36 lg:h-h-40 lg:w-full h-60 sm:h-96 object-fill"
     />
     <div class="absolute inset-0 bg-red-950 opacity-70 lg:h-72 h-60"></div>
   </section>
 
-  <h1 class="absolute w-full text-white text-4xl text-center mt-32 font-bold">Registro De Usuario</h1>
+  <h1 class="absolute w-full text-white text-4xl text-center mt-32 font-bold">
+    Registro De Usuario
+  </h1>
 
-  
-{% endblock %}
+  <form action="" method="POST" class="absolute mt-80 h-full w-full ">
+    <div class="flex flex-col w-96 m-auto font-semibold gap-3">
+      {% if messages %}
+      {% for message in messages %}
+          <div class="bg-blue-600 text-white">
+            {{message}}
+          </div>
+      {% endfor %}
+    {%  endif %}
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" value="Registro" class="rounded-full bg-blue-400 text-white font-bold px-4 py-3 hover:text-black hover:bg-white transition duration-500 ">Registro</button>
+     
+    </div>
+</form>
+
+  {% endblock %}
 </body>

@@ -1,0 +1,84 @@
+{% extends "layouts/cabezera.html" %}
+{% load static tailwind_tags %} {% load static %} {% block content %} {% tailwind_css %}
+
+<body class="overflow-x-hidden bg-background">
+    
+    <section
+    class="-z-10 absolute w-full h-60 sm:h-h-40 bg-botones sm:bg-transparent "
+  >
+    <img
+      src="{% static 'assets/panesfondo.jpg' %}"
+      alt="logo banner"
+      class="relative -z-10 md:-mt-36 sm:-mt-36 lg:h-h-40 lg:w-full h-60 sm:h-96 object-fill "
+    />
+    <div class="absolute inset-0 bg-red-950 opacity-70 lg:h-72 h-60"></div>
+  </section>
+
+  <h1 class="absolute w-full text-white text-4xl text-center mt-32 font-bold">Productos</h1>
+  
+
+
+
+  
+  <div class="bg-gray-100 h-screen py-8 absolute w-full mt-28">
+    <div class="container mx-auto px-4">
+        <h1 class="text-2xl font-semibold mb-4">Produtos Añadidos</h1>
+     
+
+        
+        <div class="flex flex-col md:flex-row gap-4">
+            <div class="md:w-3/4">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-4 flex flex-col items-end">
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-left font-semibold">Producto</th>
+                                <th class="text-left font-semibold">Precio</th>
+                                <th class="text-left font-semibold">Fecha de Entrega</th>
+                                <th class="text-left font-semibold">Hora de Entrega</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in productos_en_carrito %}
+                            <tr class="producto-row">
+                                    <td class="py-4">
+                                        <div class="flex items-center">
+                                            <img class="h-16 w-16 mr-4" src="{{ item.producto.imagen.url }}" alt="{{ item.producto.NombreProducto }}">
+                                            <span class="font-semibold">{{ item.producto.NombreProducto }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4" id="precio_{{ item.producto.ProductoID }}">${{ item.producto.Precio }}</td>
+                                    <td class="py-4">{{ item.fecha_entrega }}</td>
+                                    <td class="py-4">{{ item.hora_entrega }}</td>
+                                    <!-- En tu archivo HTML -->
+                                    <td class="py-4" id="eliminar_{{ item.producto.ProductoID }}">
+                                        <a href="{% url 'eliminar_del_carrito' producto_id=item.producto.ProductoID %}">
+                                            <i class="fa fa-trash hover:text-red-600 cursor-pointer delete-product text-xl" 
+                                            data-product-id="{{ item.producto.ProductoID }}" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+
+                                  
+                                </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                    <a href="{% url 'direccion' %}" id="guardarBtn" class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-24 ">Comprar</a>
+                </div>
+
+            </div>
+           
+    </div>
+    
+    </div>
+</div>
+
+
+
+</body>
+{% endblock %}
+
+
+
+
